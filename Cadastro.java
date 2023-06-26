@@ -25,10 +25,16 @@ class Aluno {
     public void setIdade(int idade) {
         this.idade = idade;
     }
-    public int getMatricula () {
+    public int getMatricula() {
+        return matricula;
+    }
+    public void setMatricula (int matricula) {
         this.matricula = matricula;
     }
+
 }
+
+
 public class Cadastro {
     private static List<Aluno> listaAlunos = new ArrayList<>();
         private static Scanner scanner = new Scanner(System.in);
@@ -42,10 +48,10 @@ public class Cadastro {
                     System.out.println ("3. Atualizar Aluno");
                         System.out.println ("4. Excluir  Aluno");
                             System.out.println ("0. Sair");
-                                System.out.println ("Escolha uma opção: ");
+                                System.out.println ("Escolha uma opcao: ");
                             int opcao = scanner.nextInt();
                         scanner.nextLine();
-                    switch (opçao) {
+                    switch (opcao) {
                         case 1:
                             adicionarAluno();
                         case 2:
@@ -68,11 +74,11 @@ public class Cadastro {
             System.out.println("Nome: ");
                 String name = scanner.nextLine();
                     System.out.println("Idade: ");
-                        int idade = scanner.nextLine();
+                        int idade = scanner.nextInt();
                             System.out.println("Matricula: ");
                             int matricula = scanner.nextInt();
                         Aluno aluno = new Aluno(name, idade, matricula);
-                    listaAluno.add(aluno);
+                    listaAlunos.add(aluno);
                 System.out.println("Aluno adicionado com sucesso!");
             exibirMenu();
     }
@@ -113,9 +119,9 @@ public class Cadastro {
             if (listaAlunos.isEmpty()) {
                 System.out.println("Nenhum aluno cadastrado.");
                     } else {
-                        for (Aluno aluno : listaAluno) {
+                        for (Aluno aluno : listaAlunos) {
                     System.out.println("Nome: " + aluno.getName());
-                System.out.println("Idade: " + idade.getIdade());
+                System.out.println("Idade: " + aluno.getIdade());
             System.out.println("Matricula: " + aluno.getMatricula());
         System.out.println("------------------------");
         }

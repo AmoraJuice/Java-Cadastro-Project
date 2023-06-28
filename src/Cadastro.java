@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,34 +14,39 @@ class Aluno {
             this.idade = idade;
                 this.matricula = matricula;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name ) {
         this.name = name;
     }
+
     public int getIdade() {
         return idade;
     }
+
     public void setIdade(int idade) {
         this.idade = idade;
     }
+
     public int getMatricula() {
         return matricula;
     }
+
     public void setMatricula (int matricula) {
         this.matricula = matricula;
     }
-
 }
-
 
 public class Cadastro {
     private static List<Aluno> listaAlunos = new ArrayList<>();
         private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         exibirMenu();
-    }
+}
+
     public static void exibirMenu() {
         System.out.println ("---> Cadastro de Aluno <---");
             System.out.println ("1. Adicionar Aluno");
@@ -67,21 +73,40 @@ public class Cadastro {
                         System.out.println("Opção inválida! Tente novamente.");
                             exibirMenu();
         }
-    }
+}
 
     private static void adicionarAluno(){
         System.out.println("--- Adicionar aluno ---");
             System.out.println("Nome: ");
-                String name = scanner.nextLine();
-                    System.out.println("Idade: ");
-                        int idade = scanner.nextInt();
-                            System.out.println("Matricula: ");
-                            int matricula = scanner.nextInt();
-                        Aluno aluno = new Aluno(name, idade, matricula);
-                    listaAlunos.add(aluno);
-                System.out.println("Aluno adicionado com sucesso!");
-            exibirMenu();
+        String nome = scanner.nextLine();
+
+        int idade = 0;
+        boolean idadeValida = false;
+
+        while (!idadeValida) {
+            try {
+                System.out.print("Idade: ");
+                idade = scanner.nextInt();
+                scanner.nextLine();
+                idadeValida = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Idade invalida! Digite um valor numerico.");
+                scanner.nextLine();
+        }
     }
+
+    System.out.print("Matricula: ");
+    int matricula = scanner.nextInt();
+    scanner.nextLine();
+
+    Aluno aluno = new Aluno(nome, idade, matricula);
+    listaAlunos.add(aluno);
+
+    System.out.println("Aluno adicionado com sucesso!");
+
+    exibirMenu();
+}
+
     private static void excluirAluno() {
         System.out.println("--- Exluir aluno ---");
             if (listaAlunos.isEmpty()) {
@@ -103,17 +128,8 @@ public class Cadastro {
             System.out.println("Aluno removido com sucesso!");
         }
     }
+}
 
-
-
-
-
-
-
-
-
-
-    }
     private static void visualizarAlunos() {
         System.out.println("--- Visualizar Alunos ---");
             if (listaAlunos.isEmpty()) {
@@ -127,12 +143,36 @@ public class Cadastro {
         }
     }
     exibirMenu();
-    }
+}
 
     private static void atualizarAluno() {
+    System.out.println("--- Atualizar Alunos ---");
+        if (listaAlunos.isEmpty()) {
+            System.out.println("Nenhum aluno cadastrado.");
+        } else {
+                System.out.println("Informe a matricula do aluno a ser atualizada: ");
+                int matricula = scanner.nextInt();
 
+            Aluno alunoEncontrado = null;
+            for (Aluno aluno : listaAlunos) {
+                if (aluno.getMatricula() == matricula) {
+                        alunoEncontrado = aluno;
+            break;
+                }
+            }
+            if (alunoEncontrado == null) {
+                System.out.println("Aluno não encontrado.");
+            } else {
+                System.out.println("Novo nome: ");
+                    String novoNome = scanner.nextLine();
+                System.out.println("Nova Idade: ");
+                    int novaIdade = scanner.nextInt();
+
+                    alunoEncontrado.setName(novoNome);
+                    alunoEncontrado.setIdade(novaIdade);
+                    System.out.println("Aluno atualizado com sucesso!");
+            }
+        }
+        exibirMenu();
     }
-
-
-
 }
